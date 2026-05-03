@@ -1,0 +1,5 @@
+vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm<cr>")
+vim.keymap.set("t", "<esc><esc>", function()
+	vim.cmd("stopinsert")
+	vim.cmd("ToggleTerm")
+end, { desc = "Close terminal" })
