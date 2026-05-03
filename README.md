@@ -1,6 +1,6 @@
 # ⚡ Neovim Config
 
-A modern, fast, and highly configurable Neovim setup built with **Lua** and **lazy.nvim**. Designed for Go, Python, JavaScript, Rust, and more.
+A modern, fast, and highly configurable Neovim setup built with **Lua** and **lazy.nvim**. Designed for some stuff.
 
 **Version:** nvim 0.12.2+
 
@@ -16,15 +16,6 @@ A modern, fast, and highly configurable Neovim setup built with **Lua** and **la
 - 🌳 **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)** — Syntax highlighting and text objects
 - 🔌 **[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)** — Language server integration
 - 📦 **[mason.nvim](https://github.com/mason-org/mason.nvim)** — Package manager for LSP, formatters, linters
-
-### **Languages Supported**
-- **Go** — gopls with full inlay hints, code actions, and custom analyses
-- **Lua** — lua_ls with nvim API support via lazydev
-- **Python** — pyright
-- **JavaScript/TypeScript** — ts_ls
-- **Bash** — bashls
-- **Zig** — zls
-- **JSON, YAML, Markdown** — with LSP and formatting
 
 ### **Editor Features**
 - ⌨️ **which-key** — Interactive keymap discovery
@@ -51,7 +42,6 @@ A modern, fast, and highly configurable Neovim setup built with **Lua** and **la
 ### **Build Tools**
 - **make** (for treesitter compilation)
 - **gcc/clang** (for native modules)
-- **cargo** (Rust, optional but recommended for some tools)
 
 ### **Must-Have CLI Tools**
 | Tool | Purpose | Install |
@@ -60,11 +50,6 @@ A modern, fast, and highly configurable Neovim setup built with **Lua** and **la
 | **ripgrep (rg)** | Fast grep, used in live_grep | `brew install ripgrep` / `apt install ripgrep` |
 | **fd** | Fast find alternative | `brew install fd` / `apt install fd-find` |
 | **tree-sitter-cli** | Treesitter parser management | `npm install -g tree-sitter-cli` |
-| **stylua** | Lua formatter | `brew install stylua` / `cargo install stylua` |
-| **prettier** | JS/TS/JSON/YAML formatter | `npm install -g prettier` |
-| **black** | Python formatter | `pip install black` |
-| **shfmt** | Shell formatter | `brew install shfmt` / `apt install shfmt` |
-| **jq** | JSON processor (optional) | `brew install jq` / `apt install jq` |
 
 ### **Language-Specific**
 | Language | LSP | How to Install |
@@ -74,7 +59,6 @@ A modern, fast, and highly configurable Neovim setup built with **Lua** and **la
 | **Python** | pyright | `pip install pyright` or auto-installed via mason |
 | **JavaScript/TypeScript** | ts_ls | Auto-installed via mason |
 | **Bash** | bashls | Auto-installed via mason |
-| **Zig** | zls | `brew install zls` or build from source |
 | **JSON** | jsonls | Auto-installed via mason |
 | **YAML** | yamlls | Auto-installed via mason |
 
@@ -87,40 +71,19 @@ A modern, fast, and highly configurable Neovim setup built with **Lua** and **la
 **macOS:**
 ```bash
 brew install neovim fzf ripgrep fd tree-sitter-cli stylua prettier
-pip install black
-brew install shfmt
-```
-
-**Ubuntu/Debian:**
-```bash
-sudo apt update
-sudo apt install neovim fzf ripgrep fd-find build-essential
-npm install -g tree-sitter-cli stylua prettier
-pip install black
-sudo apt install shfmt
 ```
 
 **Arch Linux:**
 ```bash
 sudo pacman -S neovim fzf ripgrep fd tree-sitter-cli stylua prettier
-pip install black
-sudo pacman -S shfmt
 ```
 
 ### **2. Install Neovim Config**
 
 **Option A: Clone directly**
 ```bash
-git clone https://github.com/nikitakakoito/nvim-config ~/.config/nvim
+git clone https://github.com/nikitakakoito/mvim-config ~/.config/nvim
 cd ~/.config/nvim
-git submodule update --init --recursive
-```
-
-**Option B: Add as submodule to dotfiles**
-```bash
-cd ~/dotfiles
-git submodule add https://github.com/nikitakakoito/nvim-config.git dot_config/nvim
-git submodule update --init --recursive
 ```
 
 ### **3. First Launch**
@@ -341,6 +304,7 @@ Each category has its own file in `lua/config/keymaps/`:
 ### **Disable a Plugin**
 
 In any plugin file, add `enabled = false`:
+or just delete its file LOL
 ```lua
 return {
   "some/plugin",
@@ -351,38 +315,6 @@ return {
 ---
 
 ## 🔧 Troubleshooting
-
-### **Problem: LSP not working**
-
-```vim
-:LspInfo
-:Mason
-```
-
-Check if your language server is installed. If not:
-```vim
-:MasonInstall gopls    # for Go
-:MasonInstall lua_ls   # for Lua
-```
-
-### **Problem: Treesitter highlighting broken**
-
-```vim
-:TSInstall <language>
-:TSUpdate
-```
-
-### **Problem: Formatters not working**
-
-```vim
-:ConformInfo
-```
-
-Make sure tool is in `languages.lua` and installed:
-```bash
-npm install -g prettier  # for JS/TS
-pip install black        # for Python
-```
 
 ### **Problem: fzf not finding files**
 
@@ -421,7 +353,6 @@ Disable unused plugins in their respective files by adding `enabled = false`.
 
 - **50+ plugins** carefully selected and configured
 - **1400+ lines** of well-organized Lua code
-- **14 language servers** auto-configured
 - **10+ CLI tools** integrated
 - **Custom architecture** with languages.lua for easy scaling
 
@@ -429,7 +360,7 @@ Disable unused plugins in their respective files by adding `enabled = false`.
 
 ## 📝 License
 
-MIT - feel free to fork, modify, and share!
+WTFPL - feel free to fork, modify, and share!
 
 ---
 
