@@ -10,7 +10,9 @@ return {
 		win = {
 			border = "rounded",
 		},
-
+		defer = {
+			ft = { "neo-tree" },
+		},
 		icons = {
 			keys = {
 				Space = "⎵ ",
