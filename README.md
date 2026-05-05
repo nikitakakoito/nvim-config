@@ -381,7 +381,7 @@ Disable unused plugins in their respective files by adding `enabled = false`.
 
 ## 🎯 What's Included
 
-- **50+ plugins** carefully selected and configured
+- **plugins** carefully selected and configured
 - **1400+ lines** of well-organized Lua code
 - **10+ CLI tools** integrated
 - **Custom architecture** with languages.lua for easy scaling
