@@ -10,7 +10,7 @@ return {
 		win = {
 			border = "rounded",
 		},
-		defer = {
+		disable = {
 			ft = { "neo-tree" },
 		},
 		icons = {
