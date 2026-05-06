@@ -36,7 +36,7 @@ return {
 			height = 0.8,
 		},
 	},
-	keys = require("config.keymaps.gopher_keyTable"),
+	keys = require("config.keymaps.go_keyTable"),
 	config = function(_, opts)
 		require("go").setup(opts)
 	end,
