@@ -189,17 +189,6 @@ Check status:
 | `<leader>rd` | Diagnostics          |
 | `<leader>rf` | Format               |
 
-**Go-specific**
-
-| Key           | Action                |
-| ------------- | --------------------- |
-| `<leader>Gt`  | Run tests             |
-| `<leader>Gtf` | Run test under cursor |
-| `<leader>Gc`  | Coverage              |
-| `<leader>Gi`  | Implement interface   |
-| `<leader>Gfs` | Fill struct           |
-| `<leader>Gat` | Add struct tags       |
-
 **Windows**
 
 | Key          | Action           |
