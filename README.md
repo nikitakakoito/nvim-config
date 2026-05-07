@@ -1,423 +1,275 @@
-# ⚡ Neovim Config
+# kathlind/nvim-config
 
-A modern, fast, and highly configurable Neovim setup built with **Lua** and **lazy.nvim**. Designed for some stuff.
+My personal Neovim setup. Lua all the way down, no vimscript, no bloat.
+Built around a single design idea: **one file to rule all languages** — add a language once, everything else picks it up automatically.
 
-**Version:** nvim 0.12.2+
-
----
-
-## 🎯 Features
-
-### **Core Plugins**
-
-- 🚀 **[blink.cmp](https://github.com/saghen/blink.cmp)** — Fast, Rust-based autocompletion (replaces nvim-cmp)
-- 🔍 **[fzf-lua](https://github.com/ibhagwan/fzf-lua)** — Blazing-fast fuzzy finder with preview
-- 🎨 **[snacks.nvim](https://github.com/folke/snacks.nvim)** — UI utilities: smooth scroll, indent guides, notifier, explorer, lazygit
-- 📝 **[noice.nvim](https://github.com/folke/noice.nvim)** — Beautiful command palette and messages
-- 🌳 **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)** — Syntax highlighting and text objects
-- 🔌 **[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)** — Language server integration
-- 📦 **[mason.nvim](https://github.com/mason-org/mason.nvim)** — Package manager for LSP, formatters, linters
-
-### **Editor Features**
-
-- ⌨️ **which-key** — Interactive keymap discovery
-- 🔄 **conform.nvim** — Auto-formatting on save
-- 📱 **toggleterm** — Integrated terminal
-- 💾 **persistence.nvim** — Session management
-- 📊 **lualine** — Beautiful statusline
-- 🎨 **tokyonight** — Modern color scheme
-- 🌈 **rainbow-delimiters** — Colored bracket pairs
-- 🔎 **gitsigns** — Git blame and diff signs
-- 🎯 **mini.ai** — Smart text objects
-- ✏️ **LuaSnip** — Snippet engine with VS Code snippets
+> Requires **Neovim ≥ 0.12**
 
 ---
 
-## 📋 System Requirements
+## What makes this config different
 
-### **Required**
-
-- **Neovim** ≥ 0.12.2
-- **git** (for lazy.nvim and plugins)
-- **node** ≥ 16 (for prettier and some LSPs)
-- **Python** ≥ 3.8 (for some tools)
-
-### **Build Tools**
-
-- **make** (for treesitter compilation)
-- **gcc/clang** (for native modules)
-
-### **Must-Have CLI Tools**
-
-| Tool                | Purpose                      | Install                                        |
-| ------------------- | ---------------------------- | ---------------------------------------------- |
-| **fzf**             | Fuzzy finder                 | `brew install fzf` / `apt install fzf`         |
-| **ripgrep (rg)**    | Fast grep, used in live_grep | `brew install ripgrep` / `apt install ripgrep` |
-| **fd**              | Fast find alternative        | `brew install fd` / `apt install fd-find`      |
-| **tree-sitter-cli** | Treesitter parser management | `npm install -g tree-sitter-cli`               |
-
-### **Language-Specific**
-
-| Language                  | LSP     | How to Install                                                                                 |
-| ------------------------- | ------- | ---------------------------------------------------------------------------------------------- |
-| **Go**                    | gopls   | `go install github.com/golang/tools/gopls@latest and go install gotest.tools/gotestsum@latest` |
-| **Lua**                   | lua_ls  | Auto-installed via mason                                                                       |
-| **Python**                | pyright | `pip install pyright` or auto-installed via mason                                              |
-| **JavaScript/TypeScript** | ts_ls   | Auto-installed via mason                                                                       |
-| **Bash**                  | bashls  | Auto-installed via mason                                                                       |
-| **JSON**                  | jsonls  | Auto-installed via mason                                                                       |
-| **YAML**                  | yamlls  | Auto-installed via mason                                                                       |
-
----
-
-## 🚀 Installation
-
-### **1. Install Dependencies**
-
-**macOS:**
-
-```bash
-brew install neovim fzf ripgrep fd tree-sitter-cli stylua prettier
-```
-
-**Arch Linux:**
-
-```bash
-sudo pacman -S neovim fzf ripgrep fd tree-sitter-cli stylua prettier
-```
-
-### **2. Install Neovim Config**
-
-**Option A: Clone directly**
-
-```bash
-git clone https://github.com/nikitakakoito/nvim-config ~/.config/nvim
-cd ~/.config/nvim
-```
-
-### **3. First Launch**
-
-```bash
-nvim
-```
-
-On first launch:
-
-1. ✅ lazy.nvim will bootstrap automatically
-2. ✅ All plugins will install
-3. ✅ Mason will install LSPs and formatters (may take 1-2 minutes)
-4. ✅ Treesitter will install parsers
-
-**Verify everything worked:**
-
-```vim
-:Lazy       # Check plugin status
-:Mason      # Check LSP/formatter status
-:TSInstall go lua python javascript typescript bash json yaml  # Install parsers
-```
-
----
-
-## ⌨️ Keymaps
-
-### **Navigation**
-
-| Key               | Action                         |
-| ----------------- | ------------------------------ |
-| `H`               | Go to start of line (like `^`) |
-| `L`               | Go to end of line (like `$`)   |
-| `<leader>h/j/k/l` | Navigate between windows       |
-| `<leader>e`       | Open file explorer             |
-| `<leader>t`       | Toggle terminal                |
-
-### **Find & Search**
-
-| Key          | Action                  |
-| ------------ | ----------------------- |
-| `<leader>ff` | Find files              |
-| `<leader>fg` | Live grep (search text) |
-| `<leader>fb` | Find buffers            |
-| `<leader>fh` | Find help tags          |
-| `<leader>fr` | Find LSP references     |
-| `<leader>fs` | Find LSP symbols        |
-
-### **Git**
-
-| Key          | Action         |
-| ------------ | -------------- |
-| `<leader>gf` | Find git files |
-| `<leader>gc` | Git commits    |
-| `<leader>gb` | Git branches   |
-| `<leader>gs` | Git status     |
-| `<leader>gg` | Open lazygit   |
-
-### **LSP & Refactoring**
-
-| Key          | Action                |
-| ------------ | --------------------- |
-| `gd`         | Go to definition      |
-| `gi`         | Go to implementation  |
-| `gr`         | Find references       |
-| `gy`         | Go to type definition |
-| `gD`         | Go to declaration     |
-| `K`          | Hover documentation   |
-| `<leader>rn` | Rename symbol         |
-| `<leader>ra` | Code action           |
-| `<leader>rd` | Show diagnostics      |
-| `<leader>rf` | Format file           |
-
-### **Go-Specific**
-
-| Key           | Action              |
-| ------------- | ------------------- |
-| `<leader>Gt`  | Run tests           |
-| `<leader>Gtf` | Run test function   |
-| `<leader>Gc`  | Show coverage       |
-| `<leader>Gi`  | Implement interface |
-| `<leader>Gfs` | Fill struct         |
-| `<leader>Gat` | Add struct tags     |
-
-### **Windows & Splits**
-
-| Key          | Action              |
-| ------------ | ------------------- |
-| `<leader>wv` | Vertical split      |
-| `<leader>ws` | Horizontal split    |
-| `<leader>we` | Equalize splits     |
-| `<leader>wx` | Close window        |
-| `<leader>wo` | Close other windows |
-
-### **UI & Toggles**
-
-| Key            | Action                 |
-| -------------- | ---------------------- |
-| `<leader>?`    | Show buffer keymaps    |
-| `<c-w><space>` | Window hydra mode      |
-| `<Esc>`        | Clear search highlight |
-| `<leader>u`    | UI options             |
-
-### **Snippets** (LuaSnip)
-
-| Key       | Action                               |
-| --------- | ------------------------------------ |
-| `<Tab>`   | Expand snippet or jump to next field |
-| `<S-Tab>` | Jump to previous field               |
-
----
-
-## 🏗️ Architecture
-
-### **Directory Structure**
-
-```
-~/.config/nvim/
-├── init.lua                    # Entry point
-├── lua/
-│   ├── config/
-│   │   ├── lazy.lua           # lazy.nvim bootstrap
-│   │   ├── options.lua        # Neovim options
-│   │   ├── keymaps.lua        # Core keymaps + autoload
-│   │   ├── autocmds.lua       # Autocommands
-│   │   ├── languages.lua      # Single source of truth for all languages
-│   │   └── keymaps/           # Individual keymap files (auto-loaded)
-│   │       ├── lsp_keymap.lua
-│   │       ├── fzf_keymap.lua
-│   │       ├── git_keymap.lua
-│   │       ├── go_keyTable.lua
-│   │       └── ...
-│   └── plugins/
-│       ├── ui/                # UI plugins (lualine, alpha, snacks, etc.)
-│       ├── editor/            # Editor plugins (which-key, comments, pairs)
-│       ├── lsp/               # LSP, completion, snippets
-│       ├── navigation/        # fzf-lua
-│       ├── treesitter/        # Treesitter and extensions
-│       └── tools/             # Utilities (formatter, gitsigns, terminal)
-```
-
-### **languages.lua — Core Architecture**
-
-The magic is in **`lua/config/languages.lua`**. It's a single file that defines all languages with their:
-
-- **Parsers** → sent to treesitter
-- **LSP Server** → sent to lspconfig & mason
-- **Formatter** → sent to conform & mason
-- **LSP Config** → applied to each language server
+Most configs scatter language setup across 5 different plugin files. Here, `lua/config/languages.lua` is the single source of truth. You define a language once — its treesitter parsers, LSP server, formatter, and LSP settings — and mason, lspconfig, treesitter, and conform all read from that same table. No duplication, no drift.
 
 ```lua
+-- lua/config/languages.lua
 M.list = {
   go = {
-    parsers = { "go", "gomod", "gosum", "gowork" },
-    lsp = "gopls",
-    config = { settings = { gopls = { ... } } },
+    parsers  = { "go", "gomod", "gosum", "gowork" },
+    lsp      = "gopls",
+    formatter = "gofumpt",
+    config   = { settings = { gopls = { ... } } },
   },
   lua = { ... },
   python = { ... },
-  -- Add new language here!
 }
 ```
 
-**Why this is cool:**
-
-- Add a new language? Just add one entry to `languages.lua`
-- mason automatically picks it up via `M.lsp_servers()`
-- treesitter automatically picks it up via `M.parsers()`
-- conform automatically picks it up via `M.formatters()`
-- lspconfig automatically configures it
+Want to add Rust? One entry. Restart. Done.
 
 ---
 
-## 🎨 Customization
+## Plugin stack
 
-### **Add a New Language**
+| Category         | Plugin                                                                   | Why                                                                   |
+| ---------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| Plugin manager   | [lazy.nvim](https://github.com/folke/lazy.nvim)                          | Fast, lazy-loads everything                                           |
+| Completion       | [blink.cmp](https://github.com/saghen/blink.cmp)                         | Rust-based, noticeably faster than nvim-cmp                           |
+| Fuzzy finder     | [fzf-lua](https://github.com/ibhagwan/fzf-lua)                           | Full previews, very fast                                              |
+| UI swiss-army    | [snacks.nvim](https://github.com/folke/snacks.nvim)                      | Smooth scroll, indent guides, notifier, explorer, lazygit integration |
+| Messages/cmdline | [noice.nvim](https://github.com/folke/noice.nvim)                        | Replaces the ugly default cmdline                                     |
+| Syntax           | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)    | Highlighting + text objects                                           |
+| LSP              | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)               | Language server wiring                                                |
+| LSP installer    | [mason.nvim](https://github.com/mason-org/mason.nvim)                    | Manages LSPs, formatters, linters                                     |
+| Formatting       | [conform.nvim](https://github.com/stevearc/conform.nvim)                 | Format on save                                                        |
+| Git              | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)              | Blame, diff signs                                                     |
+| Statusline       | [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)             |                                                                       |
+| Colorscheme      | [tokyonight.nvim](https://github.com/folke/tokyonight.nvim)              |                                                                       |
+| Keymaps hint     | [which-key.nvim](https://github.com/folke/which-key.nvim)                |                                                                       |
+| Snippets         | [LuaSnip](https://github.com/L3MON4D3/LuaSnip)                           | VS Code snippet compatible                                            |
+| Terminal         | [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)            |                                                                       |
+| Sessions         | [persistence.nvim](https://github.com/folke/persistence.nvim)            |                                                                       |
+| Text objects     | [mini.ai](https://github.com/echasnovski/mini.ai)                        |                                                                       |
+| Brackets         | [rainbow-delimiters](https://github.com/HiPhish/rainbow-delimiters.nvim) | Colored pairs                                                         |
 
-1. **Edit `lua/config/languages.lua`:**
+---
+
+## Directory layout
+
+```
+~/.config/nvim/
+├── init.lua                  # Entry point — sets leader, loads config/*
+└── lua/
+    ├── config/
+    │   ├── lazy.lua          # lazy.nvim bootstrap
+    │   ├── options.lua       # vim options
+    │   ├── keymaps.lua       # autoloads keymaps/ directory
+    │   ├── autocmds.lua      # autocommands
+    │   ├── languages.lua     # ← the important one
+    │   └── keymaps/          # one file per keymap group, auto-loaded
+    │       ├── lsp_keymap.lua
+    │       ├── fzf_keymap.lua
+    │       ├── git_keymap.lua
+    │       ├── go_keymap.lua
+    │       └── ...
+    └── plugins/
+        ├── ui/               # lualine, theme, alpha, snacks, noice, ...
+        ├── editor/           # which-key, autopairs, comments, ...
+        ├── lsp/              # lspconfig, mason, blink.cmp, luasnip
+        ├── navigation/       # fzf-lua
+        ├── treesitter/       # treesitter + extensions
+        └── tools/            # conform, gitsigns, toggleterm
+```
+
+---
+
+## Requirements
+
+**Core**
+
+- Neovim ≥ 0.12
+- git
+- Node ≥ 16
+- Python ≥ 3.8
+- make + gcc/clang (for treesitter native parsers)
+
+**CLI tools** — install these before first launch:
+
+```sh
+# macOS
+brew install fzf ripgrep fd stylua prettier
+
+# Arch
+sudo pacman -S fzf ripgrep fd stylua prettier
+```
+
+| Tool       | Used for                            |
+| ---------- | ----------------------------------- |
+| `fzf`      | fzf-lua backend                     |
+| `ripgrep`  | live grep                           |
+| `fd`       | file finding                        |
+| `stylua`   | Lua formatting                      |
+| `prettier` | JS/TS/JSON/YAML/CSS/HTML formatting |
+
+**Go extras** (if you write Go):
+
+```sh
+go install github.com/golang/tools/gopls@latest
+go install gotest.tools/gotestsum@latest
+```
+
+---
+
+## Installation
+
+```sh
+git clone https://github.com/kathlind/nvim-config ~/.config/nvim
+nvim
+```
+
+On first launch lazy.nvim bootstraps itself, installs all plugins, mason installs LSPs and formatters. Give it a minute or two.
+
+Check status:
+
+```
+:Lazy     → plugin status
+:Mason    → LSP/formatter status
+:checkhealth → general health
+```
+
+---
+
+## Keymaps
+
+`<leader>` = `Space`
+
+**Navigation**
+
+| Key               | Action               |
+| ----------------- | -------------------- |
+| `H`               | Start of line        |
+| `L`               | End of line          |
+| `<leader>h/j/k/l` | Move between windows |
+| `<leader>e`       | File explorer        |
+| `<leader>t`       | Toggle terminal      |
+
+**Find (fzf-lua)**
+
+| Key          | Action         |
+| ------------ | -------------- |
+| `<leader>ff` | Find files     |
+| `<leader>fg` | Live grep      |
+| `<leader>fb` | Buffers        |
+| `<leader>fh` | Help tags      |
+| `<leader>fr` | LSP references |
+| `<leader>fs` | LSP symbols    |
+
+**Git**
+
+| Key          | Action    |
+| ------------ | --------- |
+| `<leader>gf` | Git files |
+| `<leader>gc` | Commits   |
+| `<leader>gb` | Branches  |
+| `<leader>gs` | Status    |
+| `<leader>gg` | Lazygit   |
+
+**LSP**
+
+| Key          | Action               |
+| ------------ | -------------------- |
+| `gd`         | Go to definition     |
+| `gi`         | Go to implementation |
+| `gr`         | References           |
+| `gy`         | Type definition      |
+| `gD`         | Declaration          |
+| `K`          | Hover docs           |
+| `<leader>rn` | Rename               |
+| `<leader>ra` | Code action          |
+| `<leader>rd` | Diagnostics          |
+| `<leader>rf` | Format               |
+
+**Go-specific**
+
+| Key           | Action                |
+| ------------- | --------------------- |
+| `<leader>Gt`  | Run tests             |
+| `<leader>Gtf` | Run test under cursor |
+| `<leader>Gc`  | Coverage              |
+| `<leader>Gi`  | Implement interface   |
+| `<leader>Gfs` | Fill struct           |
+| `<leader>Gat` | Add struct tags       |
+
+**Windows**
+
+| Key          | Action           |
+| ------------ | ---------------- |
+| `<leader>wv` | Vertical split   |
+| `<leader>ws` | Horizontal split |
+| `<leader>we` | Equalize splits  |
+| `<leader>wx` | Close window     |
+| `<leader>wo` | Close others     |
+
+**Snippets (LuaSnip)**
+
+| Key       | Action                |
+| --------- | --------------------- |
+| `<Tab>`   | Expand / jump forward |
+| `<S-Tab>` | Jump backward         |
+
+---
+
+## Adding a language
+
+Edit `lua/config/languages.lua` and add an entry:
 
 ```lua
-M.list = {
-  -- ... existing languages ...
-
-  rust = {
-    parsers = { "rust" },
-    lsp = "rust_analyzer",
-    formatter = "rustfmt",
-    config = {
-      settings = {
-        ["rust-analyzer"] = {
-          checkOnSave = { command = "clippy" },
-        }
-      }
+rust = {
+  parsers   = { "rust" },
+  lsp       = "rust_analyzer",
+  formatter = "rustfmt",
+  config    = {
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = { command = "clippy" },
+      },
     },
   },
-}
+},
 ```
 
-2. **Restart Neovim**
-   - Mason will auto-install `rust_analyzer`
-   - Treesitter will auto-install `rust` parser
-   - conform will auto-use `rustfmt` for formatting
+Restart Neovim. Mason installs `rust_analyzer`, treesitter installs the parser, conform picks up `rustfmt`. Nothing else to touch.
 
-### **Change Color Scheme**
+---
 
-Edit `lua/plugins/ui/theme.lua`:
+## Customization
+
+**Change theme style** — edit `lua/plugins/ui/theme.lua`:
 
 ```lua
--- Try other tokyonight styles:
-style = "moon",  -- options: "storm", "moon", "night", "day"
+style = "moon"  -- "storm" | "moon" | "night" | "day"
 ```
 
-Or replace with another theme:
+**Add keymaps** — drop a new file in `lua/config/keymaps/`, it gets auto-loaded.
 
-```lua
-return {
-  "catppuccin/nvim",
-  name = "catppuccin",
-  priority = 1000,
-  config = function()
-    vim.cmd.colorscheme("catppuccin")
-  end,
-}
+**Disable a plugin** — add `enabled = false` to its spec, or delete the file.
+
+---
+
+## Troubleshooting
+
+**fzf not finding files** — make sure `fd` is installed:
+
+```sh
+brew install fd   # or: sudo pacman -S fd
 ```
 
-### **Adjust Keymaps**
+**Slow startup** — profile with `:Lazy profile`, then disable unused plugins.
 
-Each category has its own file in `lua/config/keymaps/`:
-
-- `lsp_keymap.lua` — LSP bindings
-- `fzf_keymap.lua` — Finder bindings
-- `git_keymap.lua` — Git bindings
-- Add a new file for your custom keymaps!
-
-### **Disable a Plugin**
-
-In any plugin file, add `enabled = false`:
-or just delete its file LOL
-
-```lua
-return {
-  "some/plugin",
-  enabled = false,  -- Won't load
-}
-```
+**LSP not attaching** — run `:checkhealth vim.lsp` and check that the server binary is on `$PATH`.
 
 ---
 
-## 🔧 Troubleshooting
+## License
 
-### **Problem: fzf not finding files**
-
-Make sure `fd` is installed:
-
-```bash
-brew install fd
-```
-
-Or use `rg` (ripgrep) which is built-in:
-
-```bash
-brew install ripgrep
-```
-
-### **Problem: Slow startup**
-
-Check lazy.nvim startup time:
-
-```vim
-:Lazy profile
-```
-
-Disable unused plugins in their respective files by adding `enabled = false`.
-
----
-
-## 📚 Learning Resources
-
-- **Neovim**: https://neovim.io/doc/
-- **Lua**: https://www.lua.org/manual/5.1/
-- **lazy.nvim**: https://github.com/folke/lazy.nvim
-- **LSP**: https://neovim.io/doc/user/lsp.html
-- **Treesitter**: https://tree-sitter.github.io/tree-sitter/
-
----
-
-## 🎯 What's Included
-
-- **plugins** carefully selected and configured
-- **1400+ lines** of well-organized Lua code
-- **10+ CLI tools** integrated
-- **Custom architecture** with languages.lua for easy scaling
-
----
-
-## 📝 License
-
-WTFPL - feel free to fork, modify, and share!
-
----
-
-## 👤 Author
-
-**kathlind** — [GitHub](https://github.com/nikitakakoito)
-
-If you find this useful, consider starring the repo! ⭐
-
----
-
-## 🤝 Contributing
-
-Found a bug or have a suggestion? Open an issue or submit a PR!
-
----
-
-## 📦 Powered By
-
-- [lazy.nvim](https://github.com/folke/lazy.nvim) — Plugin manager
-- [blink.cmp](https://github.com/saghen/blink.cmp) — Autocompletion
-- [fzf-lua](https://github.com/ibhagwan/fzf-lua) — Finder
-- [snacks.nvim](https://github.com/folke/snacks.nvim) — UI utilities
-- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) — Syntax
-- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) — LSP
-- [conform.nvim](https://github.com/stevearc/conform.nvim) — Formatting
-
----
-
-**Happy coding! 🚀**
+[WTFPL](./LICENSE) — do whatever you want with it.
