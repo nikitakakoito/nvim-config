@@ -58,15 +58,15 @@ A modern, fast, and highly configurable Neovim setup built with **Lua** and **la
 
 ### **Language-Specific**
 
-| Language                  | LSP     | How to Install                                    |
-| ------------------------- | ------- | ------------------------------------------------- |
-| **Go**                    | gopls   | `go install github.com/golang/tools/gopls@latest` |
-| **Lua**                   | lua_ls  | Auto-installed via mason                          |
-| **Python**                | pyright | `pip install pyright` or auto-installed via mason |
-| **JavaScript/TypeScript** | ts_ls   | Auto-installed via mason                          |
-| **Bash**                  | bashls  | Auto-installed via mason                          |
-| **JSON**                  | jsonls  | Auto-installed via mason                          |
-| **YAML**                  | yamlls  | Auto-installed via mason                          |
+| Language                  | LSP     | How to Install                                                                                 |
+| ------------------------- | ------- | ---------------------------------------------------------------------------------------------- |
+| **Go**                    | gopls   | `go install github.com/golang/tools/gopls@latest and go install gotest.tools/gotestsum@latest` |
+| **Lua**                   | lua_ls  | Auto-installed via mason                                                                       |
+| **Python**                | pyright | `pip install pyright` or auto-installed via mason                                              |
+| **JavaScript/TypeScript** | ts_ls   | Auto-installed via mason                                                                       |
+| **Bash**                  | bashls  | Auto-installed via mason                                                                       |
+| **JSON**                  | jsonls  | Auto-installed via mason                                                                       |
+| **YAML**                  | yamlls  | Auto-installed via mason                                                                       |
 
 ---
 

@@ -36,14 +36,14 @@ return {
 				-- Groups only. Concrete mappings are documented from their own desc.
 				{ "<leader>f", group = "find" },
 				{ "<leader>g", group = "git" },
-				{ "<leader>G", group = "Golang" },
 				{ "<leader>w", group = "Windows" },
 				{ "<leader>u", group = "ui" },
 				{ "<leader>r", group = "refactor" },
+				{ "<leader>T", group = "Tests" },
+				{ "<leader>Tc", group = "coverage" },
 				-- Single actions, useful as labels if they are not already shown cleanly
 				{ "<leader>e", desc = "Explorer" },
 				{ "<leader>rn", desc = "Rename symbol" },
-
 				-- Native groups
 				{ "[", group = "prev" },
 				{ "]", group = "next" },
