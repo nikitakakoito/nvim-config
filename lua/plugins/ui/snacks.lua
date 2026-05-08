@@ -15,6 +15,8 @@ return {
 					auto_close = true,
 					follow_file = true,
 					ignored = true,
+					hidden = true,
+					exclude = { ".git", "node_modules", ".DS_Store", "*.lock" },
 					win = {
 						list = {
 							border = "rounded",
