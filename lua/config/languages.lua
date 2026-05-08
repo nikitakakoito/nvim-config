@@ -35,23 +35,40 @@ M.list = {
 		config = {
 			settings = {
 				gopls = {
+					semanticTokens = true,
+
+					gofumpt = true,
+					staticcheck = true,
+					completeUnimported = true,
+					deepCompletion = true,
+					matcher = "fuzzy",
+
 					analyses = {
+						nilness = true,
+						unusedwrite = true,
+						useany = true,
 						unusedparams = true,
 						shadow = true,
 						fillstruct = true,
 						undeclaredname = true,
 					},
-					staticcheck = true,
-					completeUnimported = true,
-					deepCompletion = true,
-					matcher = "fuzzy",
+
 					hints = {
+						compositeLiteralTypes = true,
 						assignVariableTypes = true,
 						compositeLiteralFields = true,
 						constantValues = true,
 						functionTypeParameters = true,
 						parameterNames = true,
 						rangeVariableTypes = true,
+					},
+					codelenses = {
+						generate = true,
+						gc_details = true,
+						test = true,
+						tidy = true,
+						upgrade_dependency = true,
+						vendor = true,
 					},
 				},
 			},
